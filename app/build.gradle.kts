@@ -4,6 +4,7 @@ val springDataVersion = "3.4.2"
 val thymeleafVersion = "3.1.3.RELEASE"
 
 plugins {
+    java
     application
     id("io.freefair.lombok") version "8.13.1"
 }
@@ -20,15 +21,17 @@ dependencies {
     implementation("org.thymeleaf:thymeleaf:$thymeleafVersion")
     implementation("org.thymeleaf:thymeleaf-spring6:$thymeleafVersion")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
+    testImplementation(platform("org.junit:junit-bom:$junitJupiterVersion"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     testImplementation("org.springframework:spring-test:$springFrameworkVersion")
 }
 
-tasks {
-    withType<Test> {
-        useJUnitPlatform()
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
     }
 }
 
