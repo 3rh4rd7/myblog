@@ -1,4 +1,4 @@
-package org.myblog.domain;
+package org.myblog.domain.entities;
 
 import java.util.UUID;
 
