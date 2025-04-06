@@ -7,7 +7,10 @@ import java.util.UUID;
 
 public interface PostRepository {
     Post save(Post post);
+
     void deleteById(UUID id);
+
     Post getById(UUID id);
+
     Collection<Post> getAllPosts();
 }
