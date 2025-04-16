@@ -13,7 +13,7 @@ public class PostFixture {
     private String title = "generic_title";
     private String content = "generic_content";
     private int likes = 0;
-    private Set<String> tags = Set.of();
+    private String tags = "";
     private Map<Long, Comment> comments = new HashMap<>();
 
     public static PostFixture postFixture() {
@@ -41,7 +41,7 @@ public class PostFixture {
     }
 
     public PostFixture withTags(Set<String> tags) {
-        this.tags = tags;
+        this.tags = String.join(" ", tags);
         return this;
     }
 

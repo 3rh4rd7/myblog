@@ -30,7 +30,8 @@ public class PostService {
     public Page<Post> findAll(String tag, int page, int size) {
 
         if (hasValidTagFiltering(tag)) {
-            List<Post> posts = postRepository.findByTag(tag);
+            String pattern = "%" + tag + "%";
+            List<Post> posts = postRepository.findByTag(pattern);
 
             PageRequest pageRequest = PageRequest.of(page, size);
 
@@ -106,6 +107,6 @@ public class PostService {
     }
 
     private boolean hasValidTagFiltering(String tag) {
-        return tag != null && !tag.isEmpty();
+        return tag != null && !tag.isBlank();
     }
 }

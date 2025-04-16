@@ -4,7 +4,7 @@ CREATE TABLE "post"
     title       TEXT    NOT NULL,
     content     TEXT    NOT NULL,
     likes_count INTEGER NOT NULL DEFAULT 0,
-    tags        TEXT -- Could store as comma-separated values or JSON
+    tags        TEXT
 );
 
 CREATE TABLE "comment"

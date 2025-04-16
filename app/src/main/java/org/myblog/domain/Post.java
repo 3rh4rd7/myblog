@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Table("post")
 @Data
@@ -24,7 +25,7 @@ public class Post {
     private String content;
     @Column("LIKES_COUNT")
     private int likesCount;
-    private Set<String> tags;
+    private String tags;
     @MappedCollection(idColumn = "POST_ID", keyColumn = "ID")
     private Map<Long, Comment> comments;
 
@@ -32,7 +33,19 @@ public class Post {
         return Arrays.stream(content.split("\n")).toList();
     }
 
+    public void setTags(Set<String> tagSet) {
+        this.tags = String.join(" ", tagSet);
+    }
+
+    public Set<String> getTags() {
+        return Arrays.stream(tags.split(" ")).collect(Collectors.toSet());
+    }
+
     public String getTagsAsText() {
-        return String.join(", ", tags);
+        return tags;
+    }
+
+    public String getTextPreview() {
+        return content.length() > 50 ? content.substring(0, 50) : content;
     }
 }
