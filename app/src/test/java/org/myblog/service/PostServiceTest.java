@@ -84,7 +84,7 @@ class PostServiceTest {
 
         verify(postRepository, times(1)).findById(eq(testPost.getId()));
 
-        assertEquals(1, testPost.getLikes());
+        assertEquals(1, testPost.getLikesCount());
     }
 
     @Test
@@ -98,7 +98,7 @@ class PostServiceTest {
 
         verify(postRepository, times(1)).findById(eq(testPost.getId()));
 
-        assertEquals(0, testPost.getLikes());
+        assertEquals(0, testPost.getLikesCount());
     }
 
     @Test

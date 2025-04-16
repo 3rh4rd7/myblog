@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -21,12 +22,17 @@ public class Post {
     private long id;
     private String title;
     private String content;
-    private int likes;
+    @Column("LIKES_COUNT")
+    private int likesCount;
     private Set<String> tags;
-    @MappedCollection(idColumn = "post_id", keyColumn = "id")
+    @MappedCollection(idColumn = "POST_ID", keyColumn = "ID")
     private Map<Long, Comment> comments;
 
     public List<String> getParagraphedText() {
         return Arrays.stream(content.split("\n")).toList();
+    }
+
+    public String getTagsAsText() {
+        return String.join(", ", tags);
     }
 }

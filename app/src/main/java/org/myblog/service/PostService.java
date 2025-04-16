@@ -54,7 +54,7 @@ public class PostService {
     public Post likePost(long id) {
         Post post = findPostOrThrowNotFoundException(id);
 
-        post.setLikes(post.getLikes() + 1);
+        post.setLikesCount(post.getLikesCount() + 1);
         post = postRepository.save(post);
 
         return post;
@@ -63,7 +63,7 @@ public class PostService {
     public Post dislikePost(long id) {
         Post post = findPostOrThrowNotFoundException(id);
 
-        post.setLikes(post.getLikes() - 1);
+        post.setLikesCount(post.getLikesCount() - 1);
         post = postRepository.save(post);
 
         return post;

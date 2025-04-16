@@ -30,6 +30,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:$flywayCore")
     implementation("org.jooq:jooq:$jooqVersion")
     implementation("org.postgresql:postgresql:$postgresqlVersion")
+    implementation("com.h2database:h2:2.3.232")
 
     implementation("org.thymeleaf:thymeleaf:$thymeleafVersion")
     implementation("org.thymeleaf:thymeleaf-spring6:$thymeleafVersion")
