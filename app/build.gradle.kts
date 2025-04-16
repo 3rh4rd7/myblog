@@ -7,6 +7,7 @@ val jooqVersion = "3.20.3"
 val flywayCore = "11.6.0"
 val jakartaServletApiVersion = "6.1.0"
 val hamcrestVersion = "3.0"
+val mockitoVersion = "5.17.0"
 
 group = "org.myblog"
 version = "0.0.1-SNAPSHOT"
@@ -14,6 +15,8 @@ version = "0.0.1-SNAPSHOT"
 plugins {
     java
     war
+    id("io.freefair.lombok") version "8.13.1"
+    id("java-test-fixtures")
 }
 
 repositories {
@@ -37,6 +40,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.hamcrest:hamcrest:$hamcrestVersion")
+
+    testImplementation("org.mockito:mockito-junit-jupiter:$mockitoVersion")
 
     testImplementation("org.springframework:spring-test:$springFrameworkVersion")
 }
