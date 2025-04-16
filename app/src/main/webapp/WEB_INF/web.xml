@@ -7,7 +7,7 @@
     <display-name>MyBlog spring-based app which is started in servlets container</display-name>
 
     <servlet>
-        <servlet-name>dispatcher</servlet-name>
+        <servlet-name>blog</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 
         <init-param>
@@ -22,7 +22,7 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
+        <servlet-name>blog</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
