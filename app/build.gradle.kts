@@ -51,6 +51,10 @@ tasks.test {
     useJUnitPlatform()
 }
 
+tasks.named<War>("war") {
+    archiveFileName.set("app.war")
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
