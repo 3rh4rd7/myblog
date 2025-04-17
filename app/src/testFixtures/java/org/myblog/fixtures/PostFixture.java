@@ -14,6 +14,7 @@ public class PostFixture {
     private String content = "generic_content";
     private int likes = 0;
     private String tags = "";
+    private byte[] image = null;
     private Map<Long, Comment> comments = new HashMap<>();
 
     public static PostFixture postFixture() {
@@ -40,6 +41,11 @@ public class PostFixture {
         return this;
     }
 
+    public PostFixture withImage(byte[] imageAsBytes) {
+        this.image = imageAsBytes;
+        return this;
+    }
+
     public PostFixture withTags(Set<String> tags) {
         this.tags = String.join(" ", tags);
         return this;
@@ -51,6 +57,6 @@ public class PostFixture {
     }
 
     public Post build() {
-        return new Post(id, title, content, likes, tags, comments);
+        return new Post(id, title, content, likes, tags, image, comments);
     }
 }

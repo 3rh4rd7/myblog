@@ -62,9 +62,9 @@
         <tr>
             <td>
                 <h2 th:text="${post.getTitle()}"></h2>
-<!--                <p>-->
-<!--                    <img height="300" th:src="${'http://localhost:8080/images/'+post.getId()}">-->
-<!--                </p>-->
+                <p>
+                    <img th:src="'data:image/jpeg;base64,' + ${post.getImageAsBase64()}" alt="Post image"/>
+                </p>
                 <p style="display: flex; align-items: center; gap: 8px;">
                     <form th:action="${'/app/blog/posts/'+post.getId()+'/like'}" method="post" style="margin: 0;">
                         <button name="like">&#x1F44D;</button>

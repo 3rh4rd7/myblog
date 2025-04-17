@@ -19,6 +19,9 @@
             <param-value>org.myblog.WebConfiguration</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+        <multipart-config>
+            <location>/tmp/uploads</location>
+        </multipart-config>
     </servlet>
 
     <servlet>

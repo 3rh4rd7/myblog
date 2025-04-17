@@ -8,10 +8,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Table("post")
@@ -20,12 +17,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class Post {
     @Id
-    private long id;
+    private Long id;
     private String title;
     private String content;
     @Column("LIKES_COUNT")
     private int likesCount;
     private String tags;
+    @Column("IMAGE")
+    private byte[] image;
     @MappedCollection(idColumn = "POST_ID", keyColumn = "ID")
     private Map<Long, Comment> comments;
 
@@ -38,6 +37,9 @@ public class Post {
     }
 
     public Set<String> getTags() {
+        if (tags == null) {
+            return Collections.emptySet();
+        }
         return Arrays.stream(tags.split(" ")).collect(Collectors.toSet());
     }
 
@@ -47,5 +49,12 @@ public class Post {
 
     public String getTextPreview() {
         return content.length() > 50 ? content.substring(0, 50) : content;
+    }
+
+    public String getImageAsBase64() {
+        if (image == null || image.length == 0) {
+            return null;
+        }
+        return Base64.getEncoder().encodeToString(image);
     }
 }

@@ -4,7 +4,8 @@ CREATE TABLE "post"
     title       TEXT    NOT NULL,
     content     TEXT    NOT NULL,
     likes_count INTEGER NOT NULL DEFAULT 0,
-    tags        TEXT
+    tags        TEXT,
+    image       BLOB
 );
 
 CREATE TABLE "comment"

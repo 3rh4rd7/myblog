@@ -4,9 +4,12 @@ import org.myblog.domain.Post;
 import org.myblog.dto.PostDto;
 import org.myblog.service.PostService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("posts")
@@ -50,15 +53,20 @@ public class PostController {
         return "add-post";
     }
 
-    @PostMapping
-    public String addPost(@ModelAttribute PostDto postDto) {
+    @PostMapping(value = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String addPost(@ModelAttribute PostDto postDto) throws IOException {
         Post post = postDto.toDomainObject();
         postService.save(post);
         return "redirect:/blog/posts";
     }
 
-    @PostMapping(value = "/{id}")
-    public String editPost(Post post, @PathVariable("id") long id) {
+    @PostMapping(value = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String editPost(
+            @ModelAttribute PostDto postDto,
+            @PathVariable("id") long id
+    ) throws IOException {
+
+        Post post = postDto.toDomainObject();
         post.setId(id);
         postService.save(post);
         return "redirect:/blog/posts";

@@ -6,12 +6,12 @@ import org.mockito.Mockito;
 import org.myblog.ObjectMother;
 import org.myblog.domain.Post;
 import org.myblog.service.PostService;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class PostControllerTest {
@@ -46,23 +46,38 @@ class PostControllerTest {
     }
 
     @Test
-    void shouldAddNewPost() throws Exception {
+    void shouldAddNewPostWithImage() throws Exception {
         var post = ObjectMother.postFixture().build();
 
-        mockMvc.perform(post("/posts")
+        MockMultipartFile image = new MockMultipartFile(
+                "image", "test.jpg", "image/jpeg", "fake-image-bytes".getBytes()
+        );
+
+        mockMvc.perform(multipart("/posts")
+                        .file(image)
                         .param("title", post.getTitle())
-                        .param("content", post.getContent()))
+                        .param("content", post.getContent())
+                        .param("tags", post.getTagsAsText()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/blog/posts"));
 
-        verify(postService, times(1)).save(any(Post.class));
+        post.setImage(image.getBytes());
+        post.setComments(null);
+        post.setId(null);
+
+        verify(postService, times(1)).save(post);
     }
 
     @Test
     void shouldEditPost() throws Exception {
         var post = ObjectMother.postFixture().build();
 
-        mockMvc.perform(post("/posts/{id}", post.getId())
+        MockMultipartFile image = new MockMultipartFile(
+                "image", "test.jpg", "image/jpeg", "fake-image-bytes".getBytes()
+        );
+
+        mockMvc.perform(multipart("/posts/{id}", post.getId())
+                        .file(image)
                         .param("title", post.getTitle())
                         .param("content", post.getContent()))
                 .andExpect(status().is3xxRedirection())
