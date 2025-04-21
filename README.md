@@ -1,6 +1,6 @@
 # 📚 Learning Project for Yandex
 
-This is a basic learning project designed for deployment in a servlet container (e.g., Apache Tomcat).
+This is a basic learning project designed for playing with Spring Boot.
 
 ## 🔧 How to Build
 
@@ -34,19 +34,8 @@ mvnw.cmd clean test
 # On Windows
 mvnw.cmd clean package
 ```
-2. Copy the WAR file:
-Locate app.war in the app/target directory and copy it to your servlet container's webapps folder:
 
-```bash
-cp app/target/app.war /path/to/tomcat/webapps/
-```
-
-3. Create a temporary uploads folder (used for handling file uploads):
-
-```bash
-sudo mkdir -p /tmp/uploads
-sudo chmod 777 /tmp/uploads
-```
+2. Copy the UBER-Jar from `app/target` folder.
 
 ## 📋 Maven Wrapper
 
