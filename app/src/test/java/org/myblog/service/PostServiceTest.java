@@ -2,7 +2,10 @@ package org.myblog.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.myblog.ObjectMother;
 import org.myblog.domain.Comment;
 import org.myblog.domain.Post;
@@ -18,15 +21,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class PostServiceTest {
 
-    private final PostRepository postRepository = Mockito.mock(PostRepository.class);
-    private final CommentRepository commentRepository = Mockito.mock(CommentRepository.class);
+    @Mock
+    private PostRepository postRepository;
 
-    private final PostService postService = new PostService(postRepository, commentRepository);
+    @Mock
+    private CommentRepository commentRepository;
+
+    private PostService postService;
 
     @BeforeEach
-    void clearMocks() {
+    void setUp() {
+        postService = new PostService(postRepository, commentRepository);
         Mockito.reset(postRepository, commentRepository);
     }
 
@@ -107,7 +115,6 @@ class PostServiceTest {
         Comment expectedComment = ObjectMother.commentFixture().build();
 
         when(postRepository.findById(testPost.getId())).thenReturn(Optional.of(testPost));
-        when(postRepository.existsById(testPost.getId())).thenReturn(true);
         when(commentRepository.save(any(Comment.class))).thenAnswer(i ->
         {
             Comment comment = (Comment) i.getArguments()[0];
@@ -124,7 +131,7 @@ class PostServiceTest {
     public void addCommentToNonExistingPost() {
         Post testPost = ObjectMother.postFixture().build();
 
-        when(postRepository.existsById(testPost.getId())).thenReturn(false);
+        when(postRepository.findById(testPost.getId())).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () -> postService.addComment(testPost.getId(), "test"));
 
