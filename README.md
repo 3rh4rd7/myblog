@@ -24,7 +24,7 @@ mvnw.cmd clean package
 mvnw.cmd clean test
 ```
 
-## 🚀 How to Deploy
+## 🚀 How to start locally
 1. Build the project:
 
 ```bash
@@ -35,7 +35,14 @@ mvnw.cmd clean test
 mvnw.cmd clean package
 ```
 
-2. Copy the UBER-Jar from `app/target` folder.
+2. Start an embedded servlet container locally.
+```bash
+# On Unix-based systems (Linux, macOS)
+./mvnw spring-boot:run -pl app
+
+# On Windows
+mvnw.cmd spring-boot:run -pl app
+```
 
 ## 📋 Maven Wrapper
 
