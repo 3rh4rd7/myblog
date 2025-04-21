@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface PostRepository extends PagingAndSortingRepository<Post, Long>, CrudRepository<Post, Long> {
 
-    @Query("SELECT ID, TITLE, CONTENT, LIKES_COUNT, TAGS from \"post\" where TAGS LIKE :pattern")
+    @Query("SELECT ID, TITLE, CONTENT, LIKES_COUNT, TAGS, IMAGE from \"post\" where TAGS LIKE :pattern")
     List<Post> findByTag(@Param("pattern") String pattern);
 
 }
