@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("posts")
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
@@ -57,7 +57,7 @@ public class PostController {
     public String addPost(@ModelAttribute PostDto postDto) throws IOException {
         Post post = postDto.toDomainObject();
         postService.save(post);
-        return "redirect:/blog/posts";
+        return "redirect:/posts";
     }
 
     @PostMapping(value = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -69,13 +69,13 @@ public class PostController {
         Post post = postDto.toDomainObject();
         post.setId(id);
         postService.save(post);
-        return "redirect:/blog/posts";
+        return "redirect:/posts";
     }
 
     @PostMapping("{id}/delete")
     public String deletePost(@PathVariable("id") long id) {
         postService.delete(id);
-        return "redirect:/blog/posts";
+        return "redirect:/posts";
     }
 
     @PostMapping("{id}/like")
