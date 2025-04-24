@@ -1,33 +1,27 @@
 package org.myblog.api.http;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.myblog.ObjectMother;
 import org.myblog.domain.Post;
 import org.myblog.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@WebMvcTest(PostController.class)
 class PostControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
+    @MockitoBean
     private PostService postService;
-
-    @BeforeEach
-    void setUp() {
-        postService = Mockito.mock(PostService.class);
-        PostController postController = new PostController(postService);
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(postController)
-                .build();
-    }
 
 
     @Test
@@ -59,7 +53,7 @@ class PostControllerTest {
                         .param("content", post.getContent())
                         .param("tags", post.getTagsAsText()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/blog/posts"));
+                .andExpect(redirectedUrl("/posts"));
 
         post.setImage(image.getBytes());
         post.setComments(null);
@@ -81,7 +75,7 @@ class PostControllerTest {
                         .param("title", post.getTitle())
                         .param("content", post.getContent()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/blog/posts"));
+                .andExpect(redirectedUrl("/posts"));
 
         verify(postService, times(1)).save(any(Post.class));
     }
@@ -92,7 +86,7 @@ class PostControllerTest {
 
         mockMvc.perform(post("/posts/{id}/delete", postId))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/blog/posts"));
+                .andExpect(redirectedUrl("/posts"));
 
         verify(postService, times(1)).delete(postId);
     }
